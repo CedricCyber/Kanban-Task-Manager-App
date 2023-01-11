@@ -1,34 +1,72 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from "react";
+import data from "../../Travel-Blog/React-Travel-Blog/src/data";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+// Todo pass function as props to button in titlebar component to add task
+// Todo Tasks (Rough Draft)
+function TodoTasks(data) {
+  const [task, setTask] = data.map((task) => {
+    if (data.status == todo) {
+      return (
+        <div>
+          <h2>{task.h2}</h2>
+          <p>{task.p}</p>
+        </div>
+      );
+    }
+  });
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div>
+      <h3>Todo</h3>
+      {task}
+    </div>
+  );
+}
+// TaskBar (RoughDraft)
+function TaskBar(){
+  return (
+
+  )
+}
+// TaskBoard Component (Rough Draft)
+function TaskBoard(){
+  return (
+    <div>
+      <TaskBar/>
+      <TodoTasks/>
+      <DoingTasks/>
+      <DoneTasks/>
+      <NewTask/>
     </div>
   )
 }
+// TitleBar Component(Rough Draft)
+function TitleBar() {
+  return (
+    <div>
+      <div>
+        <Logo></Logo>
+      </div>
+      <div>
+        <Title />
+        <div>
+          <Button />
+          <Settings />
+        </div>
+      </div>
+    </div>
+  );
+}
 
-export default App
+function App() {
+  // function to conditionally render the task bar
+
+  return (
+    <div className="App">
+      <TitleBar />
+      <TaskBoard />
+    </div>
+  );
+}
+
+export default App;
