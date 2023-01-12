@@ -1,70 +1,71 @@
-import { useState } from "react";
-import data from "../../Travel-Blog/React-Travel-Blog/src/data";
-import "./App.css";
-
+import { useState, useEffect } from "react";
+import data from "./data.json";
 // Todo pass function as props to button in titlebar component to add task
 // Todo Tasks (Rough Draft)
-function TodoTasks(data) {
-  const [task, setTask] = data.map((task) => {
-    if (data.status == todo) {
-      return (
-        <div>
-          <h2>{task.h2}</h2>
-          <p>{task.p}</p>
-        </div>
-      );
-    }
-  });
-  return (
-    <div>
-      <h3>Todo</h3>
-      {task}
-    </div>
-  );
-}
+// function TodoTasks(data) {
+//   const [task, setTask] = data.map((task) => {
+//     if (data.status == todo) {
+//       return (
+//         <div>
+//           <h2>{task.h2}</h2>
+//           <p>{task.p}</p>
+//         </div>
+//       );
+//     }
+//   });
+//   return (
+//     <div>
+//       <h3>Todo</h3>
+//       {task}
+//     </div>
+//   );
+// }
 // TaskBar (RoughDraft)
-function TaskBar(){
-  return (
+// function TaskBar(){
+//   return (
 
-  )
-}
+//   )
+// }
 // TaskBoard Component (Rough Draft)
-function TaskBoard(){
-  return (
-    <div>
-      <TaskBar/>
-      <TodoTasks/>
-      <DoingTasks/>
-      <DoneTasks/>
-      <NewTask/>
-    </div>
-  )
-}
+// function TaskBoard(){
+//   return (
+//     <div>
+//       <TaskBar/>
+//       <TodoTasks/>
+//       <DoingTasks/>
+//       <DoneTasks/>
+//       <NewTask/>
+//     </div>
+//   )
+// }
 // TitleBar Component(Rough Draft)
-function TitleBar() {
-  return (
-    <div>
-      <div>
-        <Logo></Logo>
-      </div>
-      <div>
-        <Title />
-        <div>
-          <Button />
-          <Settings />
-        </div>
-      </div>
-    </div>
-  );
-}
+// function TitleBar() {
+//   return (
+//     <div>
+//       <div>
+//         <Logo></Logo>
+//       </div>
+//       <div>
+//         <Title />
+//         <div>
+//           <Button />
+//           <Settings />
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
 
 function App() {
   // function to conditionally render the task bar
-
   return (
     <div className="App">
-      <TitleBar />
-      <TaskBoard />
+      <p>
+        {data.boards.map((boards) => {
+          return boards.name;
+        })}
+      </p>
+      {console.log(data.boards)}
     </div>
   );
 }
