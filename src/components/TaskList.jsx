@@ -1,4 +1,4 @@
-export default function TaskList(columnsProp) {
+export default function TaskList(columnsProp, handleClick) {
   return columnsProp.columnsProp.map((column, index) => {
     return (
       <div key={index}>
