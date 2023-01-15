@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, forwardRef } from "react";
 import data from "./data.json";
 import { Route, Routes, Link } from "react-router-dom";
 import TaskList from "./components/TaskList";
 import addTask from "./assets/icon-board.svg";
 import Route2 from "./components/Route2"; // Todo pass function as props to button in titlebar component to add task
 export default function App() {
+  // Data from JSON file (Taskboards)
   const [taskBoards, setTaskBoards] = useState(data.boards);
 
   // const newArrayItem = document.getElementById("newArrayItem");
@@ -18,6 +19,8 @@ export default function App() {
   //   return console.log(newArrayItem.value);
   // }
   // function to conditionally render the task bar
+  // addes a new board to taskBoards array
+  // Todo: create interface to add new board dynamically
   function addBoard() {
     return setTaskBoards([
       ...taskBoards,
@@ -43,9 +46,11 @@ export default function App() {
       },
     ]);
   }
-  const deleteBoard = () => {
-    alert("delete board");
+  // deltes a board from taskBoards array
+  const deleteBoard = (index) => {
+    setTaskBoards(taskBoards.filter((board) => board !== taskBoards[index]));
   };
+
   return (
     <div className="App">
       <div>
@@ -54,6 +59,14 @@ export default function App() {
             <Link key={index} to={`/${board.name}`}>
               <button>Render {board.name}</button>
             </Link>
+
+            // <button
+            //   onClick={() => {
+            //     deleteBoard(index), console.log(index);
+            //   }}
+            // >
+            //   Delete Board
+            // </button>
           );
         })}
         <button onClick={addBoard}>Add Board</button>
@@ -63,12 +76,7 @@ export default function App() {
               <Route
                 key={index}
                 path={`${board.name}`}
-                element={
-                  <TaskList
-                    handleClick={deleteBoard}
-                    columnsProp={board.columns}
-                  />
-                }
+                element={<TaskList columnsProp={board.columns} />}
               />
             );
           })}

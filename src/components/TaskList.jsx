@@ -1,11 +1,8 @@
-export default function TaskList(columnsProp, handleClick) {
+export default function TaskList(columnsProp) {
   return columnsProp.columnsProp.map((column, index) => {
     return (
       <div key={index}>
-        {console.log(handleClick)}
         <div>
-          <button onClick={handleClick}>Delete Board</button>
-
           <div className="dot">O</div>
           <h1>
             {column.name}{" "}
