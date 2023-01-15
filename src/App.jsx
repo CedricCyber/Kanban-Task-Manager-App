@@ -1,12 +1,16 @@
-import { useState, useEffect, useRef, forwardRef } from "react";
+import { useState, useEffect } from "react";
 import data from "./data.json";
 import { Route, Routes, Link } from "react-router-dom";
 import TaskList from "./components/TaskList";
+import logoDark from "./assets/logo-dark.svg";
+import logoLight from "./assets/logo-light.svg";
+import settingsIcon from "./assets/icon-vertical-ellipsis.svg";
 import addTask from "./assets/icon-board.svg";
 import Route2 from "./components/Route2"; // Todo pass function as props to button in titlebar component to add task
 export default function App() {
   // Data from JSON file (Taskboards)
   const [taskBoards, setTaskBoards] = useState(data.boards);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   // const newArrayItem = document.getElementById("newArrayItem");
 
@@ -47,43 +51,74 @@ export default function App() {
     ]);
   }
   // deltes a board from taskBoards array
-  const deleteBoard = (index) => {
+  const deleteBoard = () => {
     setTaskBoards(taskBoards.filter((board) => board !== taskBoards[index]));
   };
-
+  const updateCurrentIndex = (index) => {
+    setCurrentIndex(index), console.log(index);
+  };
   return (
-    <div className="App">
-      <div>
-        {taskBoards.map((board, index) => {
-          return (
-            <Link key={index} to={`/${board.name}`}>
-              <button>Render {board.name}</button>
-            </Link>
-
-            // <button
-            //   onClick={() => {
-            //     deleteBoard(index), console.log(index);
-            //   }}
-            // >
-            //   Delete Board
-            // </button>
-          );
-        })}
-        <button onClick={addBoard}>Add Board</button>
-        <Routes>
+    <div className="">
+      <div className="flex h-97">
+        <div className="flex items-center border-bottom">
+          <div className="w-300">
+            <div className="flex justify-center">
+              <img src={logoDark}></img>
+            </div>
+          </div>
+        </div>
+        <div className="flex w-100 justify-between items-center border-left border-bottom">
+          <h1 className="ml-25">{taskBoards[currentIndex].name}</h1>
+          <div>
+            <button className="board-button background-purple text-white mr-20 ">
+              + Add New Task
+            </button>
+            <img className="mr-25" src={settingsIcon} />
+          </div>
+        </div>
+      </div>
+      <div className="flex">
+        <div className="w-300">
           {taskBoards.map((board, index) => {
             return (
-              <Route
-                key={index}
-                path={`${board.name}`}
-                element={<TaskList columnsProp={board.columns} />}
-              />
+              <Link key={index} to={`/${board.name}`}>
+                <button
+                  onClick={() => {
+                    updateCurrentIndex(index);
+                  }}
+                  className=" "
+                >
+                  {board.name}
+                </button>
+              </Link>
+
+              // <button
+              //   onClick={() => {
+              //     deleteBoard(index), console.log(index);
+              //   }}
+              // >
+              //   Delete Board
+              // </button>
             );
           })}
-        </Routes>
-        ;{/* <TaskList columnsProp={taskBoards[0].columns} /> */}
+          <button onClick={addBoard}>Add Board</button>
+        </div>
+
+        <div className="flex">
+          <Routes>
+            {taskBoards.map((board, index) => {
+              return (
+                <Route
+                  key={index}
+                  path={`${board.name}`}
+                  element={<TaskList columnsProp={board.columns} />}
+                />
+              );
+            })}
+          </Routes>
+          {/* <TaskList columnsProp={taskBoards[0].columns} /> */}
+        </div>
       </div>
-      ;
     </div>
   );
 }
