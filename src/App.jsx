@@ -6,6 +6,8 @@ import logoDark from "./assets/logo-dark.svg";
 import AddColumn from "./components/AddColumn";
 import logoLight from "./assets/logo-light.svg";
 import settingsIcon from "./assets/icon-vertical-ellipsis.svg";
+import boardImageGrey from "./assets/icon-board.svg";
+import boardImageWhite from "./assets/icon-board-white.svg";
 import addTask from "./assets/icon-board.svg";
 import Route2 from "./components/Route2"; // Todo pass function as props to button in titlebar component to add task
 export default function App() {
@@ -51,13 +53,16 @@ export default function App() {
       },
     ]);
   }
-  // deltes a board from taskBoards array
+  // deletes a board from taskBoards array
   const deleteBoard = () => {
     setTaskBoards(taskBoards.filter((board) => board !== taskBoards[index]));
   };
+  // updates the current index of the taskBoards array
   const updateCurrentIndex = (index) => {
     setCurrentIndex(index), console.log(index);
   };
+  // changes svg color on button hover
+
   return (
     <div className="">
       {/* TitleBar Section */}
@@ -72,7 +77,7 @@ export default function App() {
         <div className="flex w-100 justify-between items-center border-left border-bottom">
           <h1 className="ml-25">{taskBoards[currentIndex].name}</h1>
           <div>
-            <button className="board-button background-purple text-white mr-20 ">
+            <button className="task-button background-purple text-white mr-20 ">
               + Add New Task
             </button>
             <img className="mr-25" src={settingsIcon} />
@@ -90,15 +95,30 @@ export default function App() {
           {/* Displays Each Task Board from taskBoards array wrapped
            with a Link to render the Task Board with React Router*/}
           {taskBoards.map((board, index) => {
+            const [svgColor, setSvgColor] = useState("grey");
+
+            function changeSvgColor() {
+              if (svgColor === "grey") return setSvgColor("white");
+              if (svgColor === "white") return setSvgColor("grey");
+            }
             return (
               <Link key={index} to={`/${board.name}`}>
                 <button
+                  onMouseEnter={changeSvgColor}
+                  onMouseLeave={changeSvgColor}
                   onClick={() => {
                     updateCurrentIndex(index);
                   }}
-                  className=" "
+                  className="board-button"
                 >
-                  {board.name}
+                  <div className=" ml-25 flex items-center">
+                    {svgColor === "grey" ? (
+                      <img className="mr-15" src={boardImageGrey} />
+                    ) : (
+                      <img className="mr-15" src={boardImageWhite} />
+                    )}
+                    {board.name}
+                  </div>
                 </button>
               </Link>
 
@@ -111,7 +131,9 @@ export default function App() {
               // </button>
             );
           })}
-          <button onClick={addBoard}>Add Board</button>
+          <button className="board-button " onClick={addBoard}>
+            Add Board
+          </button>
         </div>
         {/* Task Lists Section */}
         <div className="flex background-dark-white task-column-container">
@@ -128,7 +150,6 @@ export default function App() {
             })}
           </Routes>
           <AddColumn />
-          {/* <TaskList columnsProp={taskBoards[0].columns} /> */}
         </div>
       </div>
     </div>

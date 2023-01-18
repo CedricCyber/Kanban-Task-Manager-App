@@ -151,7 +151,7 @@ img:hover {
   width: 200px;
   height: 40px;
 }
-.board-button {
+.task-button {
   width: 164px;
   height: 48px;
 }
@@ -284,7 +284,7 @@ img:hover {
 .new-column-button {
   border-radius: 5px;
   width: 100%;
-  max-width: 280px;
+  width: 280px;
   margin-left: 15px;
   margin-top: 90px;
   display: flex;
@@ -294,4 +294,19 @@ img:hover {
 }
 .new-column-button:hover {
   cursor: pointer;
+}
+.board-button {
+  color: #828fa3;
+  background-color: #ffffff;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 0;
+
+  width: 276px;
+  height: 48px;
+}
+.board-button:hover {
+  background-color: #635fc7;
+  color: #ffffff;
 }
