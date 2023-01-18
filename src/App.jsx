@@ -3,6 +3,7 @@ import data from "./data.json";
 import { Route, Routes, Link } from "react-router-dom";
 import TaskList from "./components/TaskList";
 import logoDark from "./assets/logo-dark.svg";
+import AddColumn from "./components/AddColumn";
 import logoLight from "./assets/logo-light.svg";
 import settingsIcon from "./assets/icon-vertical-ellipsis.svg";
 import addTask from "./assets/icon-board.svg";
@@ -59,6 +60,7 @@ export default function App() {
   };
   return (
     <div className="">
+      {/* TitleBar Section */}
       <div className="flex h-97">
         <div className="flex items-center border-bottom">
           <div className="w-300">
@@ -78,7 +80,15 @@ export default function App() {
         </div>
       </div>
       <div className="flex">
+        {/* Task Boards Section */}
         <div className="w-300">
+          <p>
+            ALL BOARDS {"("}
+            {taskBoards.length}
+            {")"}
+          </p>
+          {/* Displays Each Task Board from taskBoards array wrapped
+           with a Link to render the Task Board with React Router*/}
           {taskBoards.map((board, index) => {
             return (
               <Link key={index} to={`/${board.name}`}>
@@ -103,9 +113,10 @@ export default function App() {
           })}
           <button onClick={addBoard}>Add Board</button>
         </div>
-
-        <div className="flex">
+        {/* Task Lists Section */}
+        <div className="flex background-dark-white task-column-container">
           <Routes>
+            {/* Creates task lists for each Task Board */}
             {taskBoards.map((board, index) => {
               return (
                 <Route
@@ -116,6 +127,7 @@ export default function App() {
               );
             })}
           </Routes>
+          <AddColumn />
           {/* <TaskList columnsProp={taskBoards[0].columns} /> */}
         </div>
       </div>
