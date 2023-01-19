@@ -10,7 +10,11 @@ import boardImageGrey from "./assets/icon-board.svg";
 import boardImageWhite from "./assets/icon-board-white.svg";
 import addTask from "./assets/icon-board.svg";
 import Route2 from "./components/Route2"; // Todo pass function as props to button in titlebar component to add task
+import { gsap } from "gsap";
+
 export default function App() {
+  // ---------------------------------- State & Functions (to be passed as props to prevent ) ---------------------------------- //
+
   // Data from JSON file (Taskboards)
   const [taskBoards, setTaskBoards] = useState(data.boards);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -25,6 +29,7 @@ export default function App() {
   // function getInput() {
   //   return console.log(newArrayItem.value);
   // }
+
   // function to conditionally render the task bar
   // addes a new board to taskBoards array
   // Todo: create interface to add new board dynamically
@@ -53,16 +58,36 @@ export default function App() {
       },
     ]);
   }
-  // deletes a board from taskBoards array
+  // function to delete a board from taskBoards array
   const deleteBoard = () => {
     setTaskBoards(taskBoards.filter((board) => board !== taskBoards[index]));
   };
-  // updates the current index of the taskBoards array
+  // function to update the current index of the taskBoards array
   const updateCurrentIndex = (index) => {
     setCurrentIndex(index), console.log(index);
   };
-  // changes svg color on button hover
-
+  // state and function to toggle the color for conditional rendering of svg for board link buttons
+  // const [svgColor, setSvgColor] = useState("grey");
+  // function changeSvgColor() {
+  //   if (svgColor === "grey") return setSvgColor("white");
+  //   if (svgColor === "white") return setSvgColor("grey");
+  // }
+  // visable state for toggling task lists visability with arrow svg
+  // const [visable, setVisable] = useState(true);
+  // Refs for gsap animations (image:arrow svg rotate, list:slide column up/down)
+  // const imageRef = useRef(null);
+  // const listRef = useRef(null);
+  // function to toggle visability of task lists and rotate arrow svg
+  // function toggleList() {
+  //   return (
+  //     setVisable(!visable),
+  //     visable
+  //       ? (gsap.to(imageRef.current, { rotation: 180, duration: 0.5 }),
+  //         gsap.to(listRef.current, { y: -20, opacity: 0, duration: 0.5 }))
+  //       : (gsap.to(imageRef.current, { rotation: 0, duration: 0.5 }),
+  //         gsap.to(listRef.current, { y: 0, opacity: 1, duration: 0.5 }))
+  //   );
+  // }
   return (
     <div className="">
       {/* TitleBar Section */}
@@ -95,28 +120,27 @@ export default function App() {
           {/* Displays Each Task Board from taskBoards array wrapped
            with a Link to render the Task Board with React Router*/}
           {taskBoards.map((board, index) => {
-            const [svgColor, setSvgColor] = useState("grey");
-
-            function changeSvgColor() {
-              if (svgColor === "grey") return setSvgColor("white");
-              if (svgColor === "white") return setSvgColor("grey");
-            }
+            // const [svgColor, setSvgColor] = useState("grey");
+            // function changeSvgColor() {
+            //   if (svgColor === "grey") return setSvgColor("white");
+            //   if (svgColor === "white") return setSvgColor("grey");
+            // }
             return (
               <Link key={index} to={`/${board.name}`}>
                 <button
-                  onMouseEnter={changeSvgColor}
-                  onMouseLeave={changeSvgColor}
+                  // onMouseEnter={changeSvgColor}
+                  // onMouseLeave={changeSvgColor}
                   onClick={() => {
                     updateCurrentIndex(index);
                   }}
                   className="board-button"
                 >
                   <div className=" ml-25 flex items-center">
-                    {svgColor === "grey" ? (
+                    {/* {svgColor == "grey" ? (
                       <img className="mr-15" src={boardImageGrey} />
                     ) : (
                       <img className="mr-15" src={boardImageWhite} />
-                    )}
+                    )} */}
                     {board.name}
                   </div>
                 </button>
@@ -131,8 +155,21 @@ export default function App() {
               // </button>
             );
           })}
-          <button className="board-button " onClick={addBoard}>
-            Add Board
+
+          <button
+            // onMouseEnter={changeSvgColor}
+            // onMouseLeave={changeSvgColor}
+            className="board-button "
+            onClick={addBoard}
+          >
+            <div>
+              {/* {svgColor == "grey" ? (
+                <img className="mr-15" src={boardImageGrey} />
+              ) : (
+                <img className="mr-15" src={boardImageWhite} />
+              )} */}
+              Add Board
+            </div>
           </button>
         </div>
         {/* Task Lists Section */}
