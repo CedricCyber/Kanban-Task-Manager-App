@@ -3,18 +3,14 @@ import data from "./data.json";
 import { Route, Routes, Link } from "react-router-dom";
 import TaskList from "./components/TaskList";
 import logoDark from "./assets/logo-dark.svg";
-import AddColumn from "./components/AddColumn";
 import logoLight from "./assets/logo-light.svg";
 import settingsIcon from "./assets/icon-vertical-ellipsis.svg";
 import boardImageGrey from "./assets/icon-board.svg";
 import boardImageWhite from "./assets/icon-board-white.svg";
+import boardImagePurple from "./assets/icon-board-purple.svg";
 import addTask from "./assets/icon-board.svg";
 import Route2 from "./components/Route2"; // Todo pass function as props to button in titlebar component to add task
-import { gsap } from "gsap";
-
 export default function App() {
-  // ---------------------------------- State & Functions (to be passed as props to prevent ) ---------------------------------- //
-
   // Data from JSON file (Taskboards)
   const [taskBoards, setTaskBoards] = useState(data.boards);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -29,7 +25,6 @@ export default function App() {
   // function getInput() {
   //   return console.log(newArrayItem.value);
   // }
-
   // function to conditionally render the task bar
   // addes a new board to taskBoards array
   // Todo: create interface to add new board dynamically
@@ -54,40 +49,104 @@ export default function App() {
               },
             ],
           },
+          {
+            name: "Doing",
+            tasks: [
+              {
+                title: "Task 2",
+                status: "Doing",
+                subtasks: [
+                  {
+                    title: "Subtask 1",
+                    isCompleted: true,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            name: "Done",
+            tasks: [
+              {
+                title: "Task 3",
+                status: "Done",
+                subtasks: [
+                  {
+                    title: "Subtask 1",
+                    isCompleted: true,
+                  },
+                ],
+              },
+            ],
+          },
         ],
       },
     ]);
   }
-  // function to delete a board from taskBoards array
+  // deletes a board from taskBoards array
   const deleteBoard = () => {
     setTaskBoards(taskBoards.filter((board) => board !== taskBoards[index]));
   };
-  // function to update the current index of the taskBoards array
+  // updates the current index of the taskBoards array
   const updateCurrentIndex = (index) => {
     setCurrentIndex(index), console.log(index);
   };
-  // state and function to toggle the color for conditional rendering of svg for board link buttons
+  console.log(taskBoards);
+  function addColumn() {
+    return setTaskBoards(
+      
+      (prevBoards) => ({
+        ...prevBoards[0]
+      })
+      // (prevState) => ({
+      //   ...prevState,
+      //   boards: {
+      //     ...prevState.boards,
+      //   },
+        // columns: {
+        //   ...taskBoards[currentIndex].columns,
+        //   name: "new Column Test",
+        //   tasks: [
+        //     { title: "make this work" },
+        //     { title: "add new column" },
+        //     { title: "not give any errors" },
+        //   ],
+        // },
+      )
+      // {
+      //   ...taskBoards,
+
+      //   columns: {
+      //     ...taskBoards.columns,
+      //     name: "new Column Test",
+      //     tasks: [
+      //       { title: "make this work" },
+      //       { title: "add new column" },
+      //       { title: "not give any errors" },
+      //     ],
+      //   },
+      // }
+
+      // (prevState) => ({
+      //   ...prevState,
+      //   name: "new Column Test",
+      //   tasks: [
+      //     { title: "make this work" },
+      //     { title: "add new column" },
+      //     { title: "not give any errors" },
+      //   ],
+      // }),
+      // // return console.log("Hello");
+      // console.log(taskBoards[0].columns)
+    );
+  }
+  // changes svg color on button hover
   // const [svgColor, setSvgColor] = useState("grey");
   // function changeSvgColor() {
-  //   if (svgColor === "grey") return setSvgColor("white");
-  //   if (svgColor === "white") return setSvgColor("grey");
+  //   if (svgColor == "grey") return setSvgColor("white");
+  //   if (svgColor == "white") return setSvgColor("grey");
   // }
-  // visable state for toggling task lists visability with arrow svg
-  // const [visable, setVisable] = useState(true);
-  // Refs for gsap animations (image:arrow svg rotate, list:slide column up/down)
-  // const imageRef = useRef(null);
-  // const listRef = useRef(null);
-  // function to toggle visability of task lists and rotate arrow svg
-  // function toggleList() {
-  //   return (
-  //     setVisable(!visable),
-  //     visable
-  //       ? (gsap.to(imageRef.current, { rotation: 180, duration: 0.5 }),
-  //         gsap.to(listRef.current, { y: -20, opacity: 0, duration: 0.5 }))
-  //       : (gsap.to(imageRef.current, { rotation: 0, duration: 0.5 }),
-  //         gsap.to(listRef.current, { y: 0, opacity: 1, duration: 0.5 }))
-  //   );
-  // }
+
   return (
     <div className="">
       {/* TitleBar Section */}
@@ -120,7 +179,6 @@ export default function App() {
           {/* Displays Each Task Board from taskBoards array wrapped
            with a Link to render the Task Board with React Router*/}
           {taskBoards.map((board, index) => {
-            // const [svgColor, setSvgColor] = useState("grey");
             // function changeSvgColor() {
             //   if (svgColor === "grey") return setSvgColor("white");
             //   if (svgColor === "white") return setSvgColor("grey");
@@ -133,9 +191,10 @@ export default function App() {
                   onClick={() => {
                     updateCurrentIndex(index);
                   }}
-                  className="board-button"
+                  className="board-button mt-5"
                 >
                   <div className=" ml-25 flex items-center">
+                    {/* <img className="mr-15" src={boardImagePurple} /> */}
                     {/* {svgColor == "grey" ? (
                       <img className="mr-15" src={boardImageGrey} />
                     ) : (
@@ -163,6 +222,7 @@ export default function App() {
             onClick={addBoard}
           >
             <div>
+              {/* <img className="mr-15" src={boardImagePurple} /> */}
               {/* {svgColor == "grey" ? (
                 <img className="mr-15" src={boardImageGrey} />
               ) : (
@@ -181,12 +241,22 @@ export default function App() {
                 <Route
                   key={index}
                   path={`${board.name}`}
-                  element={<TaskList columnsProp={board.columns} />}
+                  element={
+                    <TaskList
+                      columnsProp={board.columns}
+                      addColumn={addColumn}
+                    />
+                  }
                 />
               );
             })}
           </Routes>
-          <AddColumn />
+          <button
+            onClick={addColumn}
+            className="background-light-grey new-column-button"
+          >
+            <h2 className="text-grey ">+ New Column</h2>
+          </button>
         </div>
       </div>
     </div>
