@@ -91,55 +91,122 @@ export default function App() {
   const updateCurrentIndex = (index) => {
     setCurrentIndex(index), console.log(index);
   };
+  // console.log(taskBoards);
+
+  // adds a new column to the current board
+
+  const addColumn = () => {
+    return setTaskBoards((prevBoards) => ({
+      ...prevBoards.map((board, index) => {
+        if (index == currentIndex) {
+          return (
+            // {
+            //   ...board,
+            //   columns: [
+            //     ...board.columns,
+            //     {
+            //       name: "New Column",
+            //       tasks: [
+            //         {
+            //           title: "Task 1",
+            //           status: "Todo",
+            //           subtasks: [
+            //             {
+            //               title: "Subtask 1",
+            //               isCompleted: true,
+            //             },
+            //           ],
+            //         },
+            //       ],
+            //     },
+            //   ],
+            // },
+            board
+          );
+        } else {
+          return board;
+        }
+      }),
+    }));
+  };
   console.log(taskBoards);
-  function addColumn() {
-    return setTaskBoards(
-      
-      (prevBoards) => ({
-        ...prevBoards[0]
-      })
-      // (prevState) => ({
-      //   ...prevState,
-      //   boards: {
-      //     ...prevState.boards,
-      //   },
-        // columns: {
-        //   ...taskBoards[currentIndex].columns,
-        //   name: "new Column Test",
-        //   tasks: [
-        //     { title: "make this work" },
-        //     { title: "add new column" },
-        //     { title: "not give any errors" },
-        //   ],
-        // },
-      )
-      // {
-      //   ...taskBoards,
+  //   if (board == taskBoards[currentIndex]) {
+  //     return {
+  //       ...board,
+  //       columns: [
+  //         ...board.columns,
+  //         {
+  //           name: "New Column",
+  //           tasks: [
+  //             {
+  //               title: "Task 1",
+  //               status: "Todo",
+  //               subtasks: [
+  //                 {
+  //                   title: "Subtask 1",
+  //                   isCompleted: true,
+  //                 },
+  //               ],
+  //             },
+  //           ],
+  //         },
+  //       ],
+  //     };
+  //   }
+  // setTaskBoards((prevBoards) => ({
+  //   ...prevBoards
+  // }));
+  // setTaskBoards((prevBoards)=> {
+  //   prevBoards, boards: {}
+  // })
 
-      //   columns: {
-      //     ...taskBoards.columns,
-      //     name: "new Column Test",
-      //     tasks: [
-      //       { title: "make this work" },
-      //       { title: "add new column" },
-      //       { title: "not give any errors" },
-      //     ],
-      //   },
-      // }
+  //   return setTaskBoards(
 
-      // (prevState) => ({
-      //   ...prevState,
-      //   name: "new Column Test",
-      //   tasks: [
-      //     { title: "make this work" },
-      //     { title: "add new column" },
-      //     { title: "not give any errors" },
-      //   ],
-      // }),
-      // // return console.log("Hello");
-      // console.log(taskBoards[0].columns)
-    );
-  }
+  //     (prevBoards) => ({
+  //       ...prevBoards[0]
+  //     })
+  // (prevState) => ({
+  //   ...prevState,
+  //   boards: {
+  //     ...prevState.boards,
+  //   },
+  // columns: {
+  //   ...taskBoards[currentIndex].columns,
+  //   name: "new Column Test",
+  //   tasks: [
+  //     { title: "make this work" },
+  //     { title: "add new column" },
+  //     { title: "not give any errors" },
+  //   ],
+  // },
+  // )
+  // {
+  //   ...taskBoards,
+
+  //   columns: {
+  //     ...taskBoards.columns,
+  //     name: "new Column Test",
+  //     tasks: [
+  //       { title: "make this work" },
+  //       { title: "add new column" },
+  //       { title: "not give any errors" },
+  //     ],
+  //   },
+  // }
+
+  // (prevState) => ({
+  //   ...prevState,
+  //   name: "new Column Test",
+  //   tasks: [
+  //     { title: "make this work" },
+  //     { title: "add new column" },
+  //     { title: "not give any errors" },
+  //   ],
+  // }),
+  // // return console.log("Hello");
+  // console.log(taskBoards[0].columns)
+  //   );
+  // }
   // changes svg color on button hover
   // const [svgColor, setSvgColor] = useState("grey");
   // function changeSvgColor() {
@@ -244,7 +311,7 @@ export default function App() {
                   element={
                     <TaskList
                       columnsProp={board.columns}
-                      addColumn={addColumn}
+                      // addColumn={addColumn}
                     />
                   }
                 />
@@ -263,8 +330,7 @@ export default function App() {
   );
 }
 
-{
-  /* <input id="newArrayItem" type={"text"}></input>
+/* <input id="newArrayItem" type={"text"}></input>
 {console.log(newArrayItem)}
 <button onClick={getInput}>Submit</button>
 {array.map((fruit) => {
@@ -300,7 +366,6 @@ export default function App() {
     return <Route path={fruit} element={<h2>{fruit}</h2>} />;
   })}
 </Routes> */
-}
 
 // Todo Tasks (Rough Draft)
 // function TodoTasks(data) {
