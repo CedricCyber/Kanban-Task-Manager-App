@@ -17,6 +17,21 @@ export default function App() {
 
   // const newArrayItem = document.getElementById("newArrayItem");
 
+  // setTaskBoards((prevTaskBoards) => {[
+  // ...prevTaskBoards.map((board)=>{
+  // ...board, columns: [
+  //   ...columns,
+  //   {
+  //     name:
+  //     tasks:
+  //   }
+  // ]
+  // })
+  // ]
+  //
+  //
+  // });))
+
   // const [array, setArray] = useState(["apple", "orange", "bananna"]);
   // console.log(array);
   // function deleteItem() {
@@ -95,118 +110,99 @@ export default function App() {
 
   // adds a new column to the current board
 
+  // const addColumn = () => {
+  //   // THIS WORKS!
+  //   return setTaskBoards((prevBoards) => ({
+  //     ...prevBoards.map((board, index) => {
+  //       console.log(board.columns.map((column) => console.log(column)));
+  //     }),
+  //   }));
+  // };
+  // add a new column to the current board
   const addColumn = () => {
-    return setTaskBoards((prevBoards) => ({
+    return setTaskBoards((prevBoards) => [
       ...prevBoards.map((board, index) => {
-        if (index == currentIndex) {
-          return (
-            // {
-            //   ...board,
-            //   columns: [
-            //     ...board.columns,
-            //     {
-            //       name: "New Column",
-            //       tasks: [
-            //         {
-            //           title: "Task 1",
-            //           status: "Todo",
-            //           subtasks: [
-            //             {
-            //               title: "Subtask 1",
-            //               isCompleted: true,
-            //             },
-            //           ],
-            //         },
-            //       ],
-            //     },
-            //   ],
-            // },
-            board
-          );
-        } else {
-          return board;
+        if (index === currentIndex) {
+          return {
+            ...board,
+            columns: [
+              ...board.columns,
+              {
+                name: "New Column",
+                tasks: [
+                  {
+                    title: "Task 1",
+                    status: "Todo",
+                    subtasks: [
+                      {
+                        title: "Subtask 1",
+                        isCompleted: true,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          };
         }
+        return board;
       }),
-    }));
+    ]);
   };
+  // add a new task to the current board
+  const addTask = () => {
+    return setTaskBoards((prevTaskBoards) => [
+      ...prevTaskBoards.map((board, index) => {
+        if ((index = currentIndex)) {
+          return {
+            ...board,
+            columns: [
+              ...columns.map((column) => {
+                return {
+                  ...column,
+                  tasks: [
+                    // TODO: Tasks not updating but correctly returning the previous state.
+                    ...tasks.map((task, index) => {
+                      if ((index = currentIndex)) {
+                        return [
+                          ...task,
+
+                          {
+                            title: "New Task",
+                            description: "This is a new task",
+                            status: "New",
+                            subtasks: [
+                              {
+                                title: "Sign up page",
+                                isCompleted: true,
+                              },
+                              {
+                                title: "Sign in page",
+                                isCompleted: false,
+                              },
+                              {
+                                title: "Welcome page",
+                                isCompleted: false,
+                              },
+                            ],
+                          },
+                        ];
+                      }
+                      return { ...task };
+                    }),
+                  ],
+                };
+              }),
+            ],
+          };
+        }
+        return { ...board };
+      }),
+    ]);
+  };
+
   console.log(taskBoards);
-  //   if (board == taskBoards[currentIndex]) {
-  //     return {
-  //       ...board,
-  //       columns: [
-  //         ...board.columns,
-  //         {
-  //           name: "New Column",
-  //           tasks: [
-  //             {
-  //               title: "Task 1",
-  //               status: "Todo",
-  //               subtasks: [
-  //                 {
-  //                   title: "Subtask 1",
-  //                   isCompleted: true,
-  //                 },
-  //               ],
-  //             },
-  //           ],
-  //         },
-  //       ],
-  //     };
-  //   }
-  // setTaskBoards((prevBoards) => ({
-  //   ...prevBoards
-  // }));
-  // setTaskBoards((prevBoards)=> {
-  //   prevBoards, boards: {}
-  // })
 
-  //   return setTaskBoards(
-
-  //     (prevBoards) => ({
-  //       ...prevBoards[0]
-  //     })
-  // (prevState) => ({
-  //   ...prevState,
-  //   boards: {
-  //     ...prevState.boards,
-  //   },
-  // columns: {
-  //   ...taskBoards[currentIndex].columns,
-  //   name: "new Column Test",
-  //   tasks: [
-  //     { title: "make this work" },
-  //     { title: "add new column" },
-  //     { title: "not give any errors" },
-  //   ],
-  // },
-  // )
-  // {
-  //   ...taskBoards,
-
-  //   columns: {
-  //     ...taskBoards.columns,
-  //     name: "new Column Test",
-  //     tasks: [
-  //       { title: "make this work" },
-  //       { title: "add new column" },
-  //       { title: "not give any errors" },
-  //     ],
-  //   },
-  // }
-
-  // (prevState) => ({
-  //   ...prevState,
-  //   name: "new Column Test",
-  //   tasks: [
-  //     { title: "make this work" },
-  //     { title: "add new column" },
-  //     { title: "not give any errors" },
-  //   ],
-  // }),
-  // // return console.log("Hello");
-  // console.log(taskBoards[0].columns)
-  //   );
-  // }
   // changes svg color on button hover
   // const [svgColor, setSvgColor] = useState("grey");
   // function changeSvgColor() {
@@ -228,7 +224,10 @@ export default function App() {
         <div className="flex w-100 justify-between items-center border-left border-bottom">
           <h1 className="ml-25">{taskBoards[currentIndex].name}</h1>
           <div>
-            <button className="task-button background-purple text-white mr-20 ">
+            <button
+              onClick={addTask}
+              className="task-button background-purple text-white mr-20 "
+            >
               + Add New Task
             </button>
             <img className="mr-25" src={settingsIcon} />
