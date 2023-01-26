@@ -14,7 +14,7 @@ export default function App() {
   // Data from JSON file (Taskboards)
   const [taskBoards, setTaskBoards] = useState(data.boards);
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  console.log(taskBoards);
   // const newArrayItem = document.getElementById("newArrayItem");
 
   // setTaskBoards((prevTaskBoards) => {[
@@ -151,57 +151,64 @@ export default function App() {
   };
   // add a new task to the current board
   const addTask = () => {
-    return setTaskBoards((prevTaskBoards) => [
-      ...prevTaskBoards.map((board, index) => {
-        if ((index = currentIndex)) {
-          return {
-            ...board,
-            columns: [
-              ...columns.map((column) => {
-                return {
-                  ...column,
-                  tasks: [
-                    // TODO: Tasks not updating but correctly returning the previous state.
-                    ...tasks.map((task, index) => {
-                      if ((index = currentIndex)) {
-                        return [
-                          ...task,
+    return setTaskBoards(
+      (prevTaskBoards) => [
+        ...prevTaskBoards.map((board, index) => {
+          if (index == currentIndex) {
+            return {
+              ...board,
+              columns: [
+                ...board.columns.map((column, index) => {
+                  if (index == 0) {
+                    return {
+                      ...column,
+                      tasks: [
+                        // TODO: Tasks not updating but correctly returning the previous state.
+                        // ...column.tasks.map((task, index) => {
+                        // if (index == 3) {
+                        // return [
+                        ...column.tasks,
 
-                          {
-                            title: "New Task",
-                            description: "This is a new task",
-                            status: "New",
-                            subtasks: [
-                              {
-                                title: "Sign up page",
-                                isCompleted: true,
-                              },
-                              {
-                                title: "Sign in page",
-                                isCompleted: false,
-                              },
-                              {
-                                title: "Welcome page",
-                                isCompleted: false,
-                              },
-                            ],
-                          },
-                        ];
-                      }
-                      return { ...task };
-                    }),
-                  ],
-                };
-              }),
-            ],
-          };
-        }
-        return { ...board };
-      }),
-    ]);
+                        {
+                          title: "New Task",
+                          description: "This is a new task",
+                          status: "New",
+                          subtasks: [
+                            {
+                              title: "Sign up page",
+                              isCompleted: true,
+                            },
+                            {
+                              title: "Sign in page",
+                              isCompleted: false,
+                            },
+                            {
+                              title: "Welcome page",
+                              isCompleted: false,
+                            },
+                          ],
+                        },
+                        // ]
+                        // }
+                        // return { ...task };
+                        // }),
+                      ],
+                    };
+                  }
+                  // if index is not the current index, return the column
+                  return { ...column };
+                }),
+              ],
+            };
+          }
+          return { ...board };
+        }),
+      ],
+      console.log(taskBoards)
+    );
   };
 
-  console.log(taskBoards);
+  // function to add a new task to the current board
 
   // changes svg color on button hover
   // const [svgColor, setSvgColor] = useState("grey");
