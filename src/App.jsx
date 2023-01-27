@@ -5,41 +5,24 @@ import TaskList from "./components/TaskList";
 import logoDark from "./assets/logo-dark.svg";
 import logoLight from "./assets/logo-light.svg";
 import settingsIcon from "./assets/icon-vertical-ellipsis.svg";
-import boardImageGrey from "./assets/icon-board.svg";
-import boardImageWhite from "./assets/icon-board-white.svg";
-import boardImagePurple from "./assets/icon-board-purple.svg";
+import crossSvg from "./assets/icon-cross.svg";
 import addTask from "./assets/icon-board.svg";
-import Route2 from "./components/Route2"; // Todo pass function as props to button in titlebar component to add task
+import SubtaskInput from "./components/SubtaskInput";
 export default function App() {
+  // ------------------------------------------- state ----------------------------------------->
   // Data from JSON file (Taskboards)
   const [taskBoards, setTaskBoards] = useState(data.boards);
-  const [currentIndex, setCurrentIndex] = useState(0);
   console.log(taskBoards);
-  // const newArrayItem = document.getElementById("newArrayItem");
+  // current index of rendered task board
+  const [currentIndex, setCurrentIndex] = useState(0);
+  console.log(currentIndex);
 
-  // setTaskBoards((prevTaskBoards) => {[
-  // ...prevTaskBoards.map((board)=>{
-  // ...board, columns: [
-  //   ...columns,
-  //   {
-  //     name:
-  //     tasks:
-  //   }
-  // ]
-  // })
-  // ]
-  //
-  //
-  // });))
+  const [subtasksForm, setSubtasksForms] = useState([
+    <SubtaskInput key={0} />,
+    <SubtaskInput key={1} />,
+  ]);
 
-  // const [array, setArray] = useState(["apple", "orange", "bananna"]);
-  // console.log(array);
-  // function deleteItem() {
-  //   return setArray(array.filter((a) => a !== "apple")), console.log(array);
-  // }
-  // function getInput() {
-  //   return console.log(newArrayItem.value);
-  // }
+  //------------------------------------------- functions ----------------------------------------->
   // function to conditionally render the task bar
   // addes a new board to taskBoards array
   // Todo: create interface to add new board dynamically
@@ -106,23 +89,12 @@ export default function App() {
   const updateCurrentIndex = (index) => {
     setCurrentIndex(index), console.log(index);
   };
-  // console.log(taskBoards);
 
-  // adds a new column to the current board
-
-  // const addColumn = () => {
-  //   // THIS WORKS!
-  //   return setTaskBoards((prevBoards) => ({
-  //     ...prevBoards.map((board, index) => {
-  //       console.log(board.columns.map((column) => console.log(column)));
-  //     }),
-  //   }));
-  // };
   // add a new column to the current board
   const addColumn = () => {
     return setTaskBoards((prevBoards) => [
       ...prevBoards.map((board, index) => {
-        if (index === currentIndex) {
+        if (index == currentIndex) {
           return {
             ...board,
             columns: [
@@ -208,14 +180,19 @@ export default function App() {
     );
   };
 
-  // function to add a new task to the current board
-
-  // changes svg color on button hover
-  // const [svgColor, setSvgColor] = useState("grey");
-  // function changeSvgColor() {
-  //   if (svgColor == "grey") return setSvgColor("white");
-  //   if (svgColor == "white") return setSvgColor("grey");
-  // }
+  const showTaskMenu = () => {
+    return console.log("show task menu");
+  };
+  // function to add addition subtask input to add task form
+  const addSubtask = () => {
+    return setSubtasksForms((prevForm) => {
+      [...prevForm, <SubtaskInput key={3} />];
+    });
+  };
+  // function to delete a subtask input from task form
+  const deleteSubtask = () => {
+    return console.log("delete subtask");
+  };
 
   return (
     <div className="">
@@ -232,7 +209,8 @@ export default function App() {
           <h1 className="ml-25">{taskBoards[currentIndex].name}</h1>
           <div>
             <button
-              onClick={addTask}
+              type="button"
+              onClick={showTaskMenu}
               className="task-button background-purple text-white mr-20 "
             >
               + Add New Task
@@ -241,6 +219,39 @@ export default function App() {
           </div>
         </div>
       </div>
+      <form className="absolute add-task-menu flex-col items-center">
+        <div id="addTaskMenu" className="w-416 flex-col">
+          <h2 className="mt-20">Add New Task</h2>
+          <p>Title</p>
+          <input
+            className="h-40"
+            type="text"
+            placeholder="e.g. Take coffee break"
+          />
+          <p className="mt-20">Description</p>
+          <textarea
+            className="p-112"
+            type="text"
+            placeholder="e.g. It's always good to take a break. This 15 minute break will recharge the batteries a little."
+          />
+          <div className="">
+            <p className="mt-20">Subtasks</p>
+            {subtasksForm}
+            <button onClick={addSubtask}>+ Add New Subtask</button>
+          </div>
+          <div>
+            <p className="mt-20">Status</p>
+            <select>
+              <option value="todo">Todo</option>
+              <option value="doing">Doing</option>
+              <option value="done">Done</option>
+            </select>
+          </div>
+          <button type="submit" className="mt-20">
+            Create Task
+          </button>
+        </div>
+      </form>
       <div className="flex">
         {/* Task Boards Section */}
         <div className="w-300">
