@@ -1,5 +1,5 @@
 import crossSvg from "../assets/icon-cross.svg";
-export default function SubtaskInput() {
+export default function SubtaskInput(props) {
   return (
     <div className="flex justify-between mb-5">
       <input
@@ -7,7 +7,7 @@ export default function SubtaskInput() {
         type="text"
         placeholder="e.g. Drink coffee & smile"
       />
-      <img className="py-1" src={crossSvg} />
+      <img className="py-1" onClick={props.handleDelete} src={crossSvg} />
     </div>
   );
 }

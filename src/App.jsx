@@ -9,7 +9,7 @@ import crossSvg from "./assets/icon-cross.svg";
 import addTask from "./assets/icon-board.svg";
 import SubtaskInput from "./components/SubtaskInput";
 export default function App() {
-  // ------------------------------------------- state ----------------------------------------->
+  // ------------------------------------------- Add/Delete Task Boards Logic ----------------------------------------->
   // Data from JSON file (Taskboards)
   const [taskBoards, setTaskBoards] = useState(data.boards);
   console.log(taskBoards);
@@ -17,12 +17,6 @@ export default function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   console.log(currentIndex);
 
-  const [subtasksForm, setSubtasksForms] = useState([
-    <SubtaskInput key={0} />,
-    <SubtaskInput key={1} />,
-  ]);
-
-  //------------------------------------------- functions ----------------------------------------->
   // function to conditionally render the task bar
   // addes a new board to taskBoards array
   // Todo: create interface to add new board dynamically
@@ -121,6 +115,8 @@ export default function App() {
       }),
     ]);
   };
+
+  // ------------------------------------------- Add Task Form ----------------------------------------->
   // add a new task to the current board
   const addTask = () => {
     return setTaskBoards(
@@ -179,21 +175,38 @@ export default function App() {
       console.log(taskBoards)
     );
   };
-
-  const showTaskMenu = () => {
-    return console.log("show task menu");
+  // State to toggle add task form
+  const [taskFormShown, setTaskFormShown] = useState(false);
+  const toggleTaskForm = () => {
+    return setTaskFormShown(!taskFormShown);
   };
   // function to add addition subtask input to add task form
   const addSubtask = () => {
     return setSubtasksForms((prevForm) => {
-      [...prevForm, <SubtaskInput key={3} />];
+      return [...prevForm, <SubtaskInput handleDelete={deleteSubtask} />];
     });
   };
   // function to delete a subtask input from task form
   const deleteSubtask = () => {
-    return console.log("delete subtask");
+    return setSubtasksForms((prevForm) => {
+      return [
+        ...prevForm.filter((form, index) => {
+          if (index !== prevForm.length - 1) {
+            return form;
+          }
+        }),
+      ];
+    });
   };
+  // array of subtask components to be rendered in add task form
+  const [subtasksForm, setSubtasksForms] = useState([
+    <SubtaskInput handleDelete={deleteSubtask} />,
+  ]);
 
+  // function to prevent default behaviour of form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
     <div className="">
       {/* TitleBar Section */}
@@ -210,7 +223,7 @@ export default function App() {
           <div>
             <button
               type="button"
-              onClick={showTaskMenu}
+              onClick={toggleTaskForm}
               className="task-button background-purple text-white mr-20 "
             >
               + Add New Task
@@ -219,7 +232,10 @@ export default function App() {
           </div>
         </div>
       </div>
-      <form className="absolute add-task-menu flex-col items-center">
+      <form
+        onSubmit={handleSubmit}
+        className="absolute add-task-menu flex-col items-center"
+      >
         <div id="addTaskMenu" className="w-416 flex-col">
           <h2 className="mt-20">Add New Task</h2>
           <p>Title</p>
