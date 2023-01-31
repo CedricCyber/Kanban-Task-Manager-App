@@ -17,7 +17,7 @@ export default function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   console.log(currentIndex);
 
-  // function to conditionally render the task bar
+  // function to conditionally render the task barr
   // addes a new board to taskBoards array
   // Todo: create interface to add new board dynamically
   function addBoard() {
