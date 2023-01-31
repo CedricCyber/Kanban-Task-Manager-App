@@ -322,7 +322,7 @@ img:hover {
 }
 /* class to dim/light background when menu is up */
 .dim {
-  backdrop-filter: brightness(100%);
+  backdrop-filter: brightness(99%);
   filter: brightness(50%);
 }
 .light {

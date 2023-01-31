@@ -246,27 +246,15 @@ export default function App() {
             {/* Displays Each Task Board from taskBoards array wrapped
            with a Link to render the Task Board with React Router*/}
             {taskBoards.map((board, index) => {
-              // function changeSvgColor() {
-              //   if (svgColor === "grey") return setSvgColor("white");
-              //   if (svgColor === "white") return setSvgColor("grey");
-              // }
               return (
                 <Link key={index} to={`/${board.name}`}>
                   <button
-                    // onMouseEnter={changeSvgColor}
-                    // onMouseLeave={changeSvgColor}
                     onClick={() => {
                       updateCurrentIndex(index);
                     }}
                     className="board-button mt-5"
                   >
                     <div className=" ml-25 flex items-center">
-                      {/* <img className="mr-15" src={boardImagePurple} /> */}
-                      {/* {svgColor == "grey" ? (
-                      <img className="mr-15" src={boardImageGrey} />
-                    ) : (
-                      <img className="mr-15" src={boardImageWhite} />
-                    )} */}
                       {board.name}
                     </div>
                   </button>
@@ -353,7 +341,7 @@ export default function App() {
           <div className="">
             <p className="mt-20">Subtasks</p>
             {subtasksForm}
-            <button onClick={addSubtask}>+ Add New Subtask</button>
+            <button className="h-40 w-416 text-purple" onClick={addSubtask}>+ Add New Subtask</button>
           </div>
           <div>
             <p className="mt-20">Status</p>
@@ -363,7 +351,7 @@ export default function App() {
               <option value="done">Done</option>
             </select>
           </div>
-          <button type="submit" className="mt-20">
+          <button  type="submit" className="mt-20 mb-15 h-40 text-white background-purple">
             Create Task
           </button>
         </div>
