@@ -175,18 +175,20 @@ export default function App() {
       console.log(taskBoards)
     );
   };
-  // State to toggle add task form
+
+// ---------------------------------------- Form Logic ------------------------------------------>
+  // State to toggle addTask form
   const [taskFormShown, setTaskFormShown] = useState(false);
   const toggleTaskForm = () => {
     return setTaskFormShown(!taskFormShown);
   };
-  // function to add addition subtask input to add task form
+  // function to add an addition subtask inputs to addTask form
   const addSubtask = () => {
     return setSubtasksForms((prevForm) => {
       return [...prevForm, <SubtaskInput handleDelete={deleteSubtask} />];
     });
   };
-  // function to delete a subtask input from task form
+  // function to delete a subtask input from addTask form
   const deleteSubtask = () => {
     return setSubtasksForms((prevForm) => {
       return [
@@ -198,7 +200,7 @@ export default function App() {
       ];
     });
   };
-  // array of subtask components to be rendered in add task form
+  // array of subtask input components to be rendered in add task form
   const [subtasksForm, setSubtasksForms] = useState([
     <SubtaskInput handleDelete={deleteSubtask} />,
   ]);
@@ -207,6 +209,12 @@ export default function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+
+  //---- Logic to handle form inputs of addTask form---->
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [status, setStatus] = useState('')
+
   return (
     // ------------------------------------------- JSX ----------------------------------------->
     <div>
@@ -331,12 +339,16 @@ export default function App() {
             className="h-40"
             type="text"
             placeholder="e.g. Take coffee break"
+            value={title}
+            onChange={(e)=>{setTitle(e.target.value)}}
           />
           <p className="mt-20">Description</p>
           <textarea
             className="p-112"
             type="text"
             placeholder="e.g. It's always good to take a break. This 15 minute break will recharge the batteries a little."
+            value={description}
+            onChange={(e)=>{setDescription(e.target.value)}}
           />
           <div className="">
             <p className="mt-20">Subtasks</p>
@@ -345,7 +357,7 @@ export default function App() {
           </div>
           <div>
             <p className="mt-20">Status</p>
-            <select>
+            <select onChange={()=>setStatus(e.target.value)} value={status}>
               <option value="todo">Todo</option>
               <option value="doing">Doing</option>
               <option value="done">Done</option>
@@ -354,6 +366,9 @@ export default function App() {
           <button  type="submit" className="mt-20 mb-15 h-40 text-white background-purple">
             Create Task
           </button>
+          <p>{title}</p>
+          <p>{description}</p>
+          <p>{status}</p>
         </div>
       </form>
     </div>
