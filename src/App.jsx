@@ -118,7 +118,7 @@ export default function App() {
 
   // ------------------------------------------- Add Task Form ----------------------------------------->
   // add a new task to the current board
-  const addTask = () => {
+  const addTask = (title) => {
     return setTaskBoards(
       (prevTaskBoards) => [
         ...prevTaskBoards.map((board, index) => {
@@ -357,13 +357,13 @@ export default function App() {
           </div>
           <div>
             <p className="mt-20">Status</p>
-            <select onChange={()=>setStatus(e.target.value)} value={status}>
+            <select onChange={(e)=>setStatus(e.target.value)} value={status}>
               <option value="todo">Todo</option>
               <option value="doing">Doing</option>
               <option value="done">Done</option>
             </select>
           </div>
-          <button  type="submit" className="mt-20 mb-15 h-40 text-white background-purple">
+          <button onClick={addTask}  type="submit" className="mt-20 mb-15 h-40 text-white background-purple">
             Create Task
           </button>
           <p>{title}</p>
