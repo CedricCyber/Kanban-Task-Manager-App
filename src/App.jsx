@@ -215,6 +215,28 @@ export default function App() {
   const [description, setDescription] = useState('')
   const [status, setStatus] = useState('')
 
+  const [addTaskFormInput, setAddTaskFormInput] = useState({
+    title: "",
+    description: "",
+    status: "",
+    subtasks: [
+      {
+        title: "",
+        isCompleted: false
+      }
+    ]
+    
+
+  })
+  const handleInput = (e) =>{
+    setAddTaskFormInput((prev) => {
+      return {
+        ...prev, [e.target.name]: e.target.value
+      }
+    })
+  }
+  console.log(addTaskFormInput)
+
   return (
     // ------------------------------------------- JSX ----------------------------------------->
     <div>
@@ -339,16 +361,18 @@ export default function App() {
             className="h-40"
             type="text"
             placeholder="e.g. Take coffee break"
-            value={title}
-            onChange={(e)=>{setTitle(e.target.value)}}
+            name="title"
+            value={addTaskFormInput.title}
+            onChange={handleInput}
           />
           <p className="mt-20">Description</p>
           <textarea
             className="p-112"
             type="text"
             placeholder="e.g. It's always good to take a break. This 15 minute break will recharge the batteries a little."
-            value={description}
-            onChange={(e)=>{setDescription(e.target.value)}}
+            value={addTaskFormInput.description}
+            name="description"
+            onChange={handleInput}
           />
           <div className="">
             <p className="mt-20">Subtasks</p>
@@ -357,7 +381,7 @@ export default function App() {
           </div>
           <div>
             <p className="mt-20">Status</p>
-            <select onChange={(e)=>setStatus(e.target.value)} value={status}>
+            <select onChange={handleInput} value={addTaskFormInput.status}>
               <option value="todo">Todo</option>
               <option value="doing">Doing</option>
               <option value="done">Done</option>
