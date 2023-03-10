@@ -200,11 +200,7 @@ export default function App() {
       ];
     });
   };
-  // array of subtask input components to be rendered in add task form
-  const [subtasksForm, setSubtasksForms] = useState([
-    <SubtaskInput handleDelete={deleteSubtask} />,
-  ]);
-
+  
   // function to prevent default behaviour of form submission
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -226,7 +222,7 @@ export default function App() {
       }
     ]
     
-
+    
   })
   const handleInput = (e) =>{
     setAddTaskFormInput((prev) => {
@@ -236,7 +232,11 @@ export default function App() {
     })
   }
   console.log(addTaskFormInput)
-
+  
+  // array of subtask input components to be rendered in add task form
+  const [subtasksForm, setSubtasksForms] = useState([
+    <SubtaskInput value={addTaskFormInput.subtasks[0].title} name="title" handleInput={(e)=>handleInput}  handleDelete={deleteSubtask} />,
+  ]);
   return (
     // ------------------------------------------- JSX ----------------------------------------->
     <div>
@@ -365,6 +365,7 @@ export default function App() {
             value={addTaskFormInput.title}
             onChange={handleInput}
           />
+          {addTaskFormInput.title}
           <p className="mt-20">Description</p>
           <textarea
             className="p-112"
